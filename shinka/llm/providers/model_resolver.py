@@ -6,6 +6,7 @@ from .pricing import get_provider
 
 _OPENROUTER_PREFIX = "openrouter/"
 _HEADLESS_PREFIX = "headless/"
+_CLAUDE_CLI_PREFIX = "claude-cli/"
 
 
 @dataclass(frozen=True)
@@ -30,6 +31,17 @@ def resolve_model_backend(model_name: str) -> ResolvedModel:
             original_model_name=model_name,
             api_model_name=api_model_name,
             provider="headless",
+            base_url=None,
+        )
+
+    if model_name.startswith(_CLAUDE_CLI_PREFIX):
+        api_model_name = model_name.split(_CLAUDE_CLI_PREFIX, 1)[-1]
+        if not api_model_name:
+            raise ValueError("Claude CLI model name is missing after 'claude-cli/'.")
+        return ResolvedModel(
+            original_model_name=model_name,
+            api_model_name=api_model_name,
+            provider="claude_cli",
             base_url=None,
         )
 

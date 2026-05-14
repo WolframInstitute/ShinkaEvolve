@@ -101,6 +101,9 @@ def get_client_llm(
         )
     elif provider == "headless":
         client = None
+    elif provider == "claude_cli":
+        # CLI-backed: no persistent client object needed.
+        client = None
     else:
         raise ValueError(f"Model {model_name} not supported.")
 
@@ -182,6 +185,8 @@ def get_async_client_llm(
             timeout=TIMEOUT,
         )
     elif provider == "headless":
+        client = None
+    elif provider == "claude_cli":
         client = None
     else:
         raise ValueError(f"Model {model_name} not supported.")
