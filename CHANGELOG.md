@@ -9,6 +9,7 @@ All notable changes to `shinka-evolve` are documented in this file.
 - Added Wolfram Language as a first-class evolution target: registry entries (`wolfram`, `wl`, `wls`, `mathematica`), code-fence and EVOLVE-BLOCK marker support, and end-to-end coverage in `apply_diff` / `apply_full`.
 - Added EVOLVE-BLOCK marker validation in `shinka.edit.marker_validation`, catching the LLM failure mode where a block-comment-language marker is emitted without its closing delimiter (Wolfram, Markdown), which would silently trap the candidate body inside a comment.
 - Added the `examples/wolfram_gcd_sum` task: deoptimized seed for `S(N) = sum_{i,j in 1..N} GCD(i,j)`. The evaluator calibrates the baseline on every run by timing the seed through the same `RepeatedTiming` harness as the candidate, and the Wolfram-side timeout is configurable via `WOLFRAM_GCD_MAX_SECONDS`.
+- Added the `wolfram_llm` provider (`wolfram-llm/<Service>/<Model>`) routing LLM calls through `wolframscript` and Wolfram's provider-agnostic service framework — fans out to OpenAI, Anthropic, GoogleGemini, DeepSeek, Groq, MistralAI, Cohere, AlephAlpha, TogetherAI from a single Python integration point. The bridge uses `ServiceExecute["ChatService"]` and surfaces real token usage, which is priced through the existing `calculate_cost`. `WOLFRAM_LLM_USE_LLMSYNTHESIZE=1` opts into the `LLMSynthesize` path instead.
 
 ### Fixed
 
